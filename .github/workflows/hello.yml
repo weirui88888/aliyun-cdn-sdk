@@ -16,12 +16,10 @@ jobs:
         uses: ./
         id: greet
         with:
-          milliseconds: 1000
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          actionName: 'DescribeCdnDomainConfigsRequest'
 
       - name: Echo OutPut
         run: |
           echo "Your input is ${{steps.greet.outputs.time}}"
-          echo "---start---"
-          echo ${{steps.greet.outputs.github}}
-          echo ${{steps.greet.outputs.name}}
-          echo "--- end ---"

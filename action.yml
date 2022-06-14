@@ -2,10 +2,15 @@ name: 'Aliyun Cdn Api'
 description: 'Support related configuration of ali cdn'
 author: 'weirui88888'
 inputs:
-  milliseconds: # change this
+  accessKeyId:
     required: true
-    description: 'input description here'
-    default: 10000
+    description: 'AccessKeyID'
+  accessKeySecret:
+    required: true
+    description: 'AccessKeySecret'
+  actionName:
+    require: true
+    description: 'Cdn Api Action Name'
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -1,27 +1,23 @@
-/* eslint-disable no-console */
 import * as core from '@actions/core'
-import * as github from '@actions/github'
-import {wait} from './wait'
+// import * as github from '@actions/github'
+import ApiClient, {SupportActionKeys} from './client'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const accessKeyId: string = core.getInput('accessKeyId')
+    const accessKeySecret: string = core.getInput('accessKeySecret')
+    const actionName: SupportActionKeys = core.getInput(
+      'actionName'
+    ) as SupportActionKeys
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    ApiClient[actionName]({
+      accessKeyId,
+      accessKeySecret,
+      domainName: 'hexo.newarray.vip',
+      functionNames: 'filetype_based_ttl_set'
+    })
 
     core.setOutput('time', new Date().toTimeString())
-
-    console.log(
-      '------------------------------- start -------------------------------'
-    )
-    core.setOutput('github', github.context.payload)
-    core.setOutput('name', 'jack')
-    console.log(
-      '------------------------------- end ---------------------------------'
-    )
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
