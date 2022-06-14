@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 import {wait} from './wait'
 
 async function run(): Promise<void> {
@@ -11,6 +12,7 @@ async function run(): Promise<void> {
     core.debug(new Date().toTimeString())
 
     core.setOutput('time', new Date().toTimeString())
+    core.setOutput('github', github.context)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

@@ -4,21 +4,16 @@ on: # rebuild any PRs and main branch changes
   push:
     branches:
       - main
-      - 'releases/*'
 
 jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          npm install
-      - run: |
-          npm run all
-  test: # make sure the action works on a clean machine without building
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./
+      - name: Greet
+        uses: ./
+        id: greet
         with:
-          milliseconds: 1000
+          milliseconds: 520
+
+      - name: Echo OutPut
+        run: echo "Your input is ${{steps.greet.outputs.time}}"
