@@ -18,6 +18,7 @@ async function run(): Promise<void> {
       '------------------------------- start -------------------------------'
     )
     core.setOutput('github', github.context.payload)
+    core.setOutput('name', 'jack')
     console.log(
       '------------------------------- end ---------------------------------'
     )
