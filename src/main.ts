@@ -18,6 +18,7 @@ async function run(): Promise<void> {
     })
 
     core.setOutput('time', new Date().toTimeString())
+    console.log(`--------- ${actionName} end ---------`)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
