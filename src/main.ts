@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {wait} from './wait'
@@ -12,7 +13,14 @@ async function run(): Promise<void> {
     core.debug(new Date().toTimeString())
 
     core.setOutput('time', new Date().toTimeString())
-    core.setOutput('github', github.context)
+
+    console.log(
+      '------------------------------- start -------------------------------'
+    )
+    core.setOutput('github', github.context.payload)
+    console.log(
+      '------------------------------- end ---------------------------------'
+    )
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

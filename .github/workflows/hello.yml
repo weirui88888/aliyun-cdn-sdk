@@ -15,8 +15,10 @@ jobs:
       - name: Greet
         uses: ./
         id: greet
-        with:
-          milliseconds: 520
 
       - name: Echo OutPut
-        run: echo "Your input is ${{steps.greet.outputs.time}}"
+        run: |
+          echo "Your input is ${{steps.greet.outputs.time}}"
+          echo "---start---"
+          echo ${{steps.greet.outputs.github}}
+          echo "--- end ---"
