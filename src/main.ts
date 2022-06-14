@@ -4,12 +4,14 @@ import ApiClient, {SupportActionKeys} from './client'
 
 async function run(): Promise<void> {
   try {
-    // const accessKeyId: string = core.getInput('accessKeyId')
-    // const accessKeySecret: string = core.getInput('accessKeySecret')
-    // const actionName: SupportActionKeys = core.getInput(
-    //   'actionName'
-    // ) as SupportActionKeys
-
+    const accessKeyId: string = core.getInput('accessKeyId')
+    const accessKeySecret: string = core.getInput('accessKeySecret')
+    const actionName: SupportActionKeys = core.getInput(
+      'actionName'
+    ) as SupportActionKeys
+    core.debug(accessKeyId)
+    core.debug(accessKeySecret)
+    core.debug(actionName)
     // ApiClient[actionName]({
     //   accessKeyId,
     //   accessKeySecret,
