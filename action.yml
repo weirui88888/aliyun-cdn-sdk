@@ -8,6 +8,9 @@ inputs:
   accessKeySecret:
     required: true
     description: 'accessKeySecret is required'
+  parameters:
+    required: true
+    description: 'request params,Request parameters consist of base request parameters and API custom parameters'
 outputs:
   responseBody:
     description: 'responseBody with your input'

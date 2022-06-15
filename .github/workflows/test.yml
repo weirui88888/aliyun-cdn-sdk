@@ -32,7 +32,16 @@ jobs:
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
           parameters: '{"action": "StartCdnDomain", "domainName": "gus.newarray.vip"}'
 
+      - name: Test DescribeCdnDeletedDomains
+        id: getDescribeCdnDeletedDomains
+        uses: ./
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "DescribeCdnDeletedDomains", "pageNumber": 1, "pageSize":10}'
+
       - name: View
         run: |
           echo ${{steps.getDescribeCdnDomainConfigsConfig.outputs.responseBody}}
           echo ${{steps.getStartCdnDomain.outputs.responseBody}}
+          echo ${{steps.getDescribeCdnDeletedDomains.outputs.responseBody}}
