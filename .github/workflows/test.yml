@@ -11,6 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: View
+        run: |
+          ls
+          cat package.json
+
       - name: Use This Action
         uses: ./
         with:
