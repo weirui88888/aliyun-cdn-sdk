@@ -22,7 +22,7 @@ jobs:
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
-          parameters: '{ "domainName": "hexo.newarray.vip", "functionNames": "filetype_based_ttl_set" }'
+          parameters: '{ action: "DescribeCdnDomainConfigs", "domainName": "hexo.newarray.vip", "functionNames": "filetype_based_ttl_set" }'
 
       - name: View
         run: |
