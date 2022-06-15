@@ -16,13 +16,21 @@ jobs:
           ls
           cat package.json
 
-      - name: Use This Action
+      - name: Test DescribeCdnDomainConfigs
         id: getConfig
         uses: ./
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
           parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "hexo.newarray.vip", "functionNames": "filetype_based_ttl_set" }'
+
+      - name: Test StartCdnDomain
+        id: getConfig
+        uses: ./
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "StartCdnDomain", "domainName": "gus.newarray.vip"}'
 
       - name: View
         run: |
