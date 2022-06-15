@@ -39,15 +39,14 @@ jobs:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
           parameters: '{"action": "DescribeCdnDeletedDomains", "pageNumber": 1, "pageSize":10}'
-      
+
       - name: View Gus DescribeCdnDomainConfigs
         id: getGusDescribeCdnDomainConfigsConfig
-          uses: ./
-          with:
-            accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
-            accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
-            parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "gus.newarray.vip", "functionNames": "filetype_based_ttl_set" }'
-
+        uses: ./
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "gus.newarray.vip", "functionNames": "filetype_based_ttl_set" }'
 
       - name: View
         run: |
