@@ -2,10 +2,12 @@ name: 'Aliyun Cdn Api'
 description: 'supports all standard aliyun cdn apis for easy use in github actions'
 author: 'weirui88888'
 inputs:
-  milliseconds: # change this
+  accessKeyId:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'accessKeyId is required'
+  accessKeySecret:
+    required: true
+    description: 'accessKeySecret is required'
 runs:
   using: 'node12'
   main: 'dist/index.js'

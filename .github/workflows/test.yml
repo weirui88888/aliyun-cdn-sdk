@@ -14,4 +14,5 @@ jobs:
       - name: Use This Action
         uses: ./
         with:
-          milliseconds: 1000
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}

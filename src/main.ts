@@ -1,14 +1,17 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import Client from './client'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const accessKeyId: string = core.getInput('accessKeyId')
+    const accessKeySecret: string = core.getInput('accessKeySecret')
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    Client.DescribeCdnDomainConfigs(
+      accessKeyId,
+      accessKeySecret,
+      'hexo.newarray.vip',
+      'filetype_based_ttl_set'
+    )
 
     core.setOutput('time', new Date().toTimeString())
   } catch (error) {
