@@ -65,11 +65,20 @@ class Client {
     static DescribeCdnDomainConfigs(accessKeyId, accessKeySecret, domainName, functionNames) {
         return __awaiter(this, void 0, void 0, function* () {
             const client = Client.createCdnClient(accessKeyId, accessKeySecret);
+            console.log('---------------------------client----------------------');
+            console.log(client);
+            console.log('---------------------------client----------------------');
             const req = new $Cdn.DescribeCdnDomainConfigsRequest({
                 domainName,
                 functionNames
             });
+            console.log('---------------------------req----------------------');
+            console.log(req);
+            console.log('---------------------------req----------------------');
             const resp = yield client.describeCdnDomainConfigs(req);
+            console.log('---------------------------resp----------------------');
+            console.log(resp);
+            console.log('---------------------------resp----------------------');
             tea_console_1.default.log('--------------------获取域名的配置成功--------------------');
             return resp;
         });
