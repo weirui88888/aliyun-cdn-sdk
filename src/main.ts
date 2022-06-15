@@ -6,13 +6,13 @@ async function run(): Promise<void> {
     const accessKeyId: string = core.getInput('accessKeyId')
     const accessKeySecret: string = core.getInput('accessKeySecret')
 
-    const DescribeCdnDomainConfigs = Client.DescribeCdnDomainConfigs(
+    const resp = await Client.DescribeCdnDomainConfigs(
       accessKeyId,
       accessKeySecret,
       'hexo.newarray.vip',
       'filetype_based_ttl_set'
     )
-    core.setOutput('DescribeCdnDomainConfigs', DescribeCdnDomainConfigs)
+    core.setOutput('DescribeCdnDomainConfigs', resp.body.domainConfigs)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
