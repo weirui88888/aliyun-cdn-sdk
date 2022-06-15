@@ -128,8 +128,8 @@ function run() {
         try {
             const accessKeyId = core.getInput('accessKeyId');
             const accessKeySecret = core.getInput('accessKeySecret');
-            client_1.default.DescribeCdnDomainConfigs(accessKeyId, accessKeySecret, 'hexo.newarray.vip', 'filetype_based_ttl_set');
-            core.setOutput('time', new Date().toTimeString());
+            const DescribeCdnDomainConfigs = client_1.default.DescribeCdnDomainConfigs(accessKeyId, accessKeySecret, 'hexo.newarray.vip', 'filetype_based_ttl_set');
+            core.setOutput('DescribeCdnDomainConfigs', DescribeCdnDomainConfigs);
         }
         catch (error) {
             if (error instanceof Error)
