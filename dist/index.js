@@ -95,7 +95,7 @@ class Client {
                 const options = new $Cdn[RequestActionName](requestOptions);
                 const response = yield client[CdnSdkApiName](options, runtimeOptions);
                 core.info('------------------------------- view your sdk api response start -------------------------------');
-                core.info(response);
+                console.log(response);
                 core.info('-------------------------------- view your sdk api response end --------------------------------');
                 return response;
             }

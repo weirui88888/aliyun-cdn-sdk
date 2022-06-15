@@ -66,7 +66,7 @@ export default class Client {
       core.info(
         '------------------------------- view your sdk api response start -------------------------------'
       )
-      core.info(response)
+      console.log(response)
       core.info(
         '-------------------------------- view your sdk api response end --------------------------------'
       )
