@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          npm install --package-lock-only
+          npm install
       - run: |
           npm run all
 
