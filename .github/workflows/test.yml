@@ -22,7 +22,7 @@ jobs:
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
-          parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "hexo.newarray.vip", "functionNames": "filetype_based_ttl_set","format":"XML" }'
+          parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "hexo.newarray.vip", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
 
       - name: Test StartCdnDomain
         id: getStartCdnDomain
