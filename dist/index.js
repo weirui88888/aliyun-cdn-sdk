@@ -73,7 +73,9 @@ class Client {
     }
     static Sdk(accessKeyId, accessKeySecret, parameters) {
         return __awaiter(this, void 0, void 0, function* () {
-            core.info(parameters);
+            core.info('------------------------------- view parameters start -------------------------------');
+            core.info(`you use this action with parameters:${parameters}`);
+            core.info('-------------------------------- view parameters end --------------------------------');
             const client = Client.createCdnClient(accessKeyId, accessKeySecret);
             let _a = JSON.parse(parameters), { action } = _a, requestOptions = __rest(_a, ["action"]);
             const hasRuntimeOptions = !!requestOptions.runtimeOptions;
@@ -84,15 +86,16 @@ class Client {
                 delete requestOptions.runtimeOptions;
             }
             let ActionName = `${action}Request`;
-            core.info(ActionName);
             let ClientApiName = `${action.replace(action[0], action[0].toLowerCase())}WithOptions`;
-            core.info(ClientApiName);
+            core.info('------------------------------- view your sdk api name start -------------------------------');
+            core.info(`you use this action will call sdk api name:${ClientApiName}`);
+            core.info('-------------------------------- view your sdk api name end --------------------------------');
             try {
                 const options = new $Cdn[ActionName](requestOptions);
                 const response = yield client[ClientApiName](options, runtimeOptions);
-                console.log('---------------------------response.body----------------------');
-                console.log(response.body);
-                console.log('---------------------------response.body----------------------');
+                core.info('------------------------------- view your sdk api response start -------------------------------');
+                core.info(`you get below response by your sdk api called:${response}`);
+                core.info('-------------------------------- view your sdk api response end --------------------------------');
                 return response;
             }
             catch (error) {
