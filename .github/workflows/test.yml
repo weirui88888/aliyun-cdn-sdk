@@ -15,7 +15,7 @@ jobs:
       - run: |
           npm run all
 
-      - names: Use This Action
-      - uses: ./
+      - name: Use This Action
+        uses: ./
         with:
           milliseconds: 1000
