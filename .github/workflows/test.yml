@@ -17,7 +17,7 @@ jobs:
           cat package.json
 
       - name: Test DescribeCdnDomainConfigs
-        id: getConfig
+        id: getDescribeCdnDomainConfigsConfig
         uses: ./
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
@@ -25,7 +25,7 @@ jobs:
           parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "hexo.newarray.vip", "functionNames": "filetype_based_ttl_set" }'
 
       - name: Test StartCdnDomain
-        id: getConfig
+        id: getStartCdnDomain
         uses: ./
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
@@ -34,4 +34,5 @@ jobs:
 
       - name: View
         run: |
-          echo ${{steps.getConfig.outputs.responseBody}}
+          echo ${{steps.getDescribeCdnDomainConfigsConfig.outputs.responseBody}}
+          echo ${{steps.getStartCdnDomain.outputs.responseBody}}
