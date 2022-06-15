@@ -5,14 +5,10 @@ async function run(): Promise<void> {
   try {
     const accessKeyId: string = core.getInput('accessKeyId')
     const accessKeySecret: string = core.getInput('accessKeySecret')
+    const parameters: string = core.getInput('parameters')
 
-    const resp = await Client.DescribeCdnDomainConfigs(
-      accessKeyId,
-      accessKeySecret,
-      'hexo.newarray.vip',
-      'filetype_based_ttl_set'
-    )
-    core.setOutput('DescribeCdnDomainConfigs', resp.body.domainConfigs)
+    const response = await Client.Sdk(accessKeyId, accessKeySecret, parameters)
+    core.setOutput('responseBody', response.body)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

@@ -1,8 +1,10 @@
+// @ts-nocheck
 import Console from '@alicloud/tea-console'
 import OpenApi, * as $OpenApi from '@alicloud/openapi-client'
 import Cdn, * as $Cdn from '@alicloud/cdn20180510'
 import * as $tea from '@alicloud/tea-typescript'
-import Util from '@alicloud/tea-util'
+import Util, * as $Util from '@alicloud/tea-util'
+import * as core from '@actions/core'
 
 export default class Client {
   static createCdnClient(accessKeyId: string, accessKeySecret: string): Cdn {
@@ -14,28 +16,54 @@ export default class Client {
     return new Cdn(config)
   }
 
-  static async DescribeCdnDomainConfigs(
+  static async Sdk(
     accessKeyId: string,
     accessKeySecret: string,
-    domainName: string,
-    functionNames: string
-  ): Promise<$Cdn.DescribeCdnDomainConfigsResponse> {
+    parameters: string
+  ): Promise<any> {
+    core.info(parameters)
+
     const client = Client.createCdnClient(accessKeyId, accessKeySecret)
-    console.log('---------------------------client----------------------')
-    console.log(client)
-    console.log('---------------------------client----------------------')
-    const req = new $Cdn.DescribeCdnDomainConfigsRequest({
-      domainName,
-      functionNames
-    })
-    console.log('---------------------------req----------------------')
-    console.log(req)
-    console.log('---------------------------req----------------------')
-    const resp = await client.describeCdnDomainConfigs(req)
-    console.log('---------------------------resp----------------------')
-    console.log(resp)
-    console.log('---------------------------resp----------------------')
-    Console.log('--------------------获取域名的配置成功--------------------')
-    return resp
+
+    let {action, ...requestOptions} = JSON.parse(parameters)
+
+    const hasRuntimeOptions = !!requestOptions.runtimeOptions
+
+    const runtimeOptions = hasRuntimeOptions
+      ? new $Util.RuntimeOptions(requestOptions.runtimeOptions)
+      : new $Util.RuntimeOptions({})
+
+    if (hasRuntimeOptions) {
+      delete requestOptions.runtimeOptions
+    }
+
+    let ActionName = `${action}Request`
+    core.info(ActionName)
+
+    let ClientApiName = `${action.replace(
+      action[0],
+      action[0].toLowerCase()
+    )}WithOptions`
+
+    core.info(ClientApiName)
+
+    try {
+      const options = new $Cdn[ActionName](requestOptions)
+      const response = await client[ClientApiName](options, runtimeOptions)
+
+      console.log(
+        '---------------------------response.body----------------------'
+      )
+      console.log(response.body)
+      console.log(
+        '---------------------------response.body----------------------'
+      )
+      return response
+    } catch (error) {
+      // @ts-ignore
+      Util.assertAsString(error.message)
+      // @ts-ignore
+      core.setFailed(error.message)
+    }
   }
 }

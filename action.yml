@@ -9,8 +9,8 @@ inputs:
     required: true
     description: 'accessKeySecret is required'
 outputs:
-  DescribeCdnDomainConfigs:
-    description: 'The DescribeCdnDomainConfigs of your support'
+  responseBody:
+    description: 'responseBody with your input'
 runs:
   using: 'node12'
   main: 'dist/index.js'

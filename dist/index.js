@@ -46,13 +46,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const tea_console_1 = __importDefault(__nccwpck_require__(5477));
 const $OpenApi = __importStar(__nccwpck_require__(6642));
 const cdn20180510_1 = __importStar(__nccwpck_require__(3121)), $Cdn = cdn20180510_1;
+const tea_util_1 = __importStar(__nccwpck_require__(1979)), $Util = tea_util_1;
+const core = __importStar(__nccwpck_require__(2186));
 class Client {
     static createCdnClient(accessKeyId, accessKeySecret) {
         const config = new $OpenApi.Config({
@@ -62,25 +71,36 @@ class Client {
         config.endpoint = 'cdn.aliyuncs.com';
         return new cdn20180510_1.default(config);
     }
-    static DescribeCdnDomainConfigs(accessKeyId, accessKeySecret, domainName, functionNames) {
+    static Sdk(accessKeyId, accessKeySecret, parameters) {
         return __awaiter(this, void 0, void 0, function* () {
+            core.info(parameters);
             const client = Client.createCdnClient(accessKeyId, accessKeySecret);
-            console.log('---------------------------client----------------------');
-            console.log(client);
-            console.log('---------------------------client----------------------');
-            const req = new $Cdn.DescribeCdnDomainConfigsRequest({
-                domainName,
-                functionNames
-            });
-            console.log('---------------------------req----------------------');
-            console.log(req);
-            console.log('---------------------------req----------------------');
-            const resp = yield client.describeCdnDomainConfigs(req);
-            console.log('---------------------------resp----------------------');
-            console.log(resp);
-            console.log('---------------------------resp----------------------');
-            tea_console_1.default.log('--------------------获取域名的配置成功--------------------');
-            return resp;
+            let _a = JSON.parse(parameters), { action } = _a, requestOptions = __rest(_a, ["action"]);
+            const hasRuntimeOptions = !!requestOptions.runtimeOptions;
+            const runtimeOptions = hasRuntimeOptions
+                ? new $Util.RuntimeOptions(requestOptions.runtimeOptions)
+                : new $Util.RuntimeOptions({});
+            if (hasRuntimeOptions) {
+                delete requestOptions.runtimeOptions;
+            }
+            let ActionName = `${action}Request`;
+            core.info(ActionName);
+            let ClientApiName = `${action.replace(action[0], action[0].toLowerCase())}WithOptions`;
+            core.info(ClientApiName);
+            try {
+                const options = new $Cdn[ActionName](requestOptions);
+                const response = yield client[ClientApiName](options, runtimeOptions);
+                console.log('---------------------------response.body----------------------');
+                console.log(response.body);
+                console.log('---------------------------response.body----------------------');
+                return response;
+            }
+            catch (error) {
+                // @ts-ignore
+                tea_util_1.default.assertAsString(error.message);
+                // @ts-ignore
+                core.setFailed(error.message);
+            }
         });
     }
 }
@@ -137,8 +157,9 @@ function run() {
         try {
             const accessKeyId = core.getInput('accessKeyId');
             const accessKeySecret = core.getInput('accessKeySecret');
-            const resp = yield client_1.default.DescribeCdnDomainConfigs(accessKeyId, accessKeySecret, 'hexo.newarray.vip', 'filetype_based_ttl_set');
-            core.setOutput('DescribeCdnDomainConfigs', resp.body.domainConfigs);
+            const parameters = core.getInput('parameters');
+            const response = yield client_1.default.Sdk(accessKeyId, accessKeySecret, parameters);
+            core.setOutput('responseBody', response.body);
         }
         catch (error) {
             if (error instanceof Error)
@@ -24692,64 +24713,6 @@ class Client {
             return '';
         }
         return encode(param);
-    }
-}
-exports.default = Client;
-//# sourceMappingURL=client.js.map
-
-/***/ }),
-
-/***/ 5477:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-class Client {
-    /**
-     * Console val with log level
-     * @param val the printing string
-     * @return void
-     * @example [LOG] tea console example
-     */
-    static log(val) {
-        console.log('[LOG] ' + val);
-    }
-    /**
-     * Console val with info level
-     * @param val the printing string
-     * @return void
-     * @example [INFO] tea console example
-     */
-    static info(val) {
-        console.log('[INFO] ' + val);
-    }
-    /**
-     * Console val with warning level
-     * @param val the printing string
-     * @return void
-     * @example [WARNING] tea console example
-     */
-    static warning(val) {
-        console.log('[WARNING] ' + val);
-    }
-    /**
-     * Console val with debug level
-     * @param val the printing string
-     * @return void
-     * @example [DEBUG] tea console example
-     */
-    static debug(val) {
-        console.log('[DEBUG] ' + val);
-    }
-    /**
-     * Console val with error level
-     * @param val the printing string
-     * @return void
-     * @example [ERROR] tea console example
-     */
-    static error(val) {
-        console.log('[ERROR] ' + val);
     }
 }
 exports.default = Client;
