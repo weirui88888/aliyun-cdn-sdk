@@ -43,29 +43,30 @@ export default class Client {
       delete requestOptions.runtimeOptions
     }
 
-    let ActionName = `${action}Request`
+    let RequestActionName = `${action}Request`
 
-    let ClientApiName = `${action.replace(
-      action[0],
-      action[0].toLowerCase()
-    )}WithOptions`
+    let ActionName = action.replace(action[0], action[0].toLowerCase())
+
+    let CdnSdkApiName = `${ActionName}WithOptions`
 
     core.info(
       '------------------------------- view your sdk api name start -------------------------------'
     )
-    core.info(`you use this action will call sdk api name:${ClientApiName}`)
+    core.info(
+      `you use this action will call sdk api name:${CdnSdkApiName} by your input parameters.action:${ActionName}`
+    )
     core.info(
       '-------------------------------- view your sdk api name end --------------------------------'
     )
 
     try {
-      const options = new $Cdn[ActionName](requestOptions)
-      const response = await client[ClientApiName](options, runtimeOptions)
+      const options = new $Cdn[RequestActionName](requestOptions)
+      const response = await client[CdnSdkApiName](options, runtimeOptions)
 
       core.info(
         '------------------------------- view your sdk api response start -------------------------------'
       )
-      core.info(`you get below response by your sdk api called:${response}`)
+      core.info(response)
       core.info(
         '-------------------------------- view your sdk api response end --------------------------------'
       )
