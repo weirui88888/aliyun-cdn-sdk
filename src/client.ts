@@ -41,7 +41,8 @@ export default class Client {
   ): Promise<any> {
     logger(
       'view parameters',
-      `you use this action with parameters:${parameters}`
+      `you use this action with parameters:${parameters}`,
+      '43'
     )
 
     const client = Client.createCdnClient(accessKeyId, accessKeySecret)
@@ -66,12 +67,14 @@ export default class Client {
 
     logger(
       'view sdk api name',
-      `you use this action will call sdk api name:${CdnSdkApiName} by your input`
+      `you use this action will call sdk api name:${CdnSdkApiName} by your input`,
+      '41'
     )
 
     logger(
       'view cdn open api name',
-      `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`
+      `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`,
+      '44'
     )
 
     try {

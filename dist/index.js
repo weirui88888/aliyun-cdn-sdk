@@ -80,7 +80,7 @@ class Client {
     }
     static Sdk(accessKeyId, accessKeySecret, parameters) {
         return __awaiter(this, void 0, void 0, function* () {
-            logger('view parameters', `you use this action with parameters:${parameters}`);
+            logger('view parameters', `you use this action with parameters:${parameters}`, '43');
             const client = Client.createCdnClient(accessKeyId, accessKeySecret);
             let _a = JSON.parse(parameters), { action, runtimeOptions } = _a, requestOptions = __rest(_a, ["action", "runtimeOptions"]);
             for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
@@ -94,8 +94,8 @@ class Client {
             let RequestActionName = `${action}Request`;
             let ActionName = action.replace(action[0], action[0].toLowerCase());
             let CdnSdkApiName = `${ActionName}WithOptions`;
-            logger('view sdk api name', `you use this action will call sdk api name:${CdnSdkApiName} by your input`);
-            logger('view cdn open api name', `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`);
+            logger('view sdk api name', `you use this action will call sdk api name:${CdnSdkApiName} by your input`, '41');
+            logger('view cdn open api name', `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`, '44');
             try {
                 const options = new $Cdn[RequestActionName](requestOptions);
                 const response = yield client[CdnSdkApiName](options, runtime);
