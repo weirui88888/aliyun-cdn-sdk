@@ -57,12 +57,7 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-// @ts-nocheck
-const tea_console_1 = __importDefault(__nccwpck_require__(5477));
 const $OpenApi = __importStar(__nccwpck_require__(6642));
 const cdn20180510_1 = __importStar(__nccwpck_require__(3121)), $Cdn = cdn20180510_1;
 const tea_util_1 = __importStar(__nccwpck_require__(1979)), $Util = tea_util_1;
@@ -99,7 +94,7 @@ class Client {
                 const options = new $Cdn[RequestActionName](requestOptions);
                 const response = yield client[CdnSdkApiName](options, runtime);
                 core.info('------------------------------- view your sdk api response start -------------------------------');
-                tea_console_1.default.log(response);
+                console.log(response);
                 core.info('-------------------------------- view your sdk api response end --------------------------------');
                 return response;
             }
@@ -24721,64 +24716,6 @@ class Client {
             return '';
         }
         return encode(param);
-    }
-}
-exports.default = Client;
-//# sourceMappingURL=client.js.map
-
-/***/ }),
-
-/***/ 5477:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-class Client {
-    /**
-     * Console val with log level
-     * @param val the printing string
-     * @return void
-     * @example [LOG] tea console example
-     */
-    static log(val) {
-        console.log('[LOG] ' + val);
-    }
-    /**
-     * Console val with info level
-     * @param val the printing string
-     * @return void
-     * @example [INFO] tea console example
-     */
-    static info(val) {
-        console.log('[INFO] ' + val);
-    }
-    /**
-     * Console val with warning level
-     * @param val the printing string
-     * @return void
-     * @example [WARNING] tea console example
-     */
-    static warning(val) {
-        console.log('[WARNING] ' + val);
-    }
-    /**
-     * Console val with debug level
-     * @param val the printing string
-     * @return void
-     * @example [DEBUG] tea console example
-     */
-    static debug(val) {
-        console.log('[DEBUG] ' + val);
-    }
-    /**
-     * Console val with error level
-     * @param val the printing string
-     * @return void
-     * @example [ERROR] tea console example
-     */
-    static error(val) {
-        console.log('[ERROR] ' + val);
     }
 }
 exports.default = Client;

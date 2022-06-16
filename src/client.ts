@@ -5,7 +5,6 @@ import Cdn, * as $Cdn from '@alicloud/cdn20180510'
 import * as $tea from '@alicloud/tea-typescript'
 import Util, * as $Util from '@alicloud/tea-util'
 import * as core from '@actions/core'
-import Console from '@alicloud/tea-console'
 
 export default class Client {
   static createCdnClient(accessKeyId: string, accessKeySecret: string): Cdn {
@@ -61,7 +60,7 @@ export default class Client {
       core.info(
         '------------------------------- view your sdk api response start -------------------------------'
       )
-      Console.log(response)
+      console.log(response)
       core.info(
         '-------------------------------- view your sdk api response end --------------------------------'
       )
