@@ -1,18 +1,20 @@
 <h3 align="center">
-Aliyun Cdn Api Github Action 
+Aliyun Cdn Sdk Github Action 
 </h3>
 
-![language-typescript](https://img.shields.io/badge/typescript-blue?style=flat&logo=typescript&logoColor=white) ![aliyun-cdn-sdk-github-action](https://img.shields.io/badge/Github%20Action%20-Aliyun%20CDN%20Api-brightgreen?style=flat&logo=GitHub%20Actions&logoColor=white)
+![language-typescript](https://img.shields.io/badge/typescript-blue?style=flat&logo=typescript&logoColor=white) [![aliyun-cdn-api-github-action](https://img.shields.io/badge/Github%20Action%20-Aliyun%20CDN%20Api-brightgreen?style=flat&logo=GitHub%20Actions&logoColor=white)](https://github.com/marketplace/actions/aliyun-cdn-sdk)
 
 ## 简介
 
-一款基于阿里云 CDN API 的 Github Action，几乎支持所有的官方 API 调用，具体的细节和使用方式请结合[CDN API 参考](https://help.aliyun.com/document_detail/91856.html)
+一款基于阿里云 CDN API 的 [Github Action](https://github.com/marketplace/actions/aliyun-cdn-sdk)，几乎支持所有的官方 API 调用，具体的细节和使用方式请结合[CDN API 参考](https://help.aliyun.com/document_detail/91856.html)
+
+该[aliyun-cdn-sdk](https://github.com/weirui88888/aliyun-cdn-sdk)基于官方仓库[官方模板仓库](https://github.com/actions/typescript-action)进行创建
 
 ## 使用步骤
 
 ##### 1.明确意图
 
-明确你想要用该 Action 来对你的 CDN 做些什么配置。然后去[官方 API 文档](https://help.aliyun.com/document_detail/106661.html)找到对应的方法，这里以最简单的`DescribeCdnDomainConfigs`举例子
+明确你想要用该 Action 来对你的 CDN 做些什么配置。然后去[官方 API 文档](https://help.aliyun.com/document_detail/106661.html)找到对应的方法，这里以最简单的`DescribeCdnDomainConfigs`进行演示
 
 ![DescribeCdnDomainConfigs](http://show.newarray.vip/aliyun-cdn-api-action/DescribeCdnDomainConfigs.png)
 
@@ -82,11 +84,17 @@ Aliyun Cdn Api Github Action
     echo ${{steps.getDescribeCdnDomainConfigsConfig.outputs.responseBody}}
 ```
 
-## 对于 parameters 格式的阐述
+## 调试信息
 
-一般开发者**不需要**过多关注下面的内容，除非你有一些**高级配置**需要配置，具体的配置项请参考[aliyun/tea-util](https://github.com/aliyun/tea-util/blob/10d152a3838594532b734956a3d72c81c94b4241/ts/src/client.ts#L8)
+同时为了能够方便使用者知道自己使用该 Action 的操作行为路径，在应用程序中，我对关键步骤进行了**日志输出**，方便用户明确自己的`入参`，`实际调用CDN方法`，`api调用结果`
 
-基本的参数，只用放到字符串对象顶层即可，比如`action` `domainName` `functionNames`等，但是对于一些高级的配置项，需要放置于`runtimeOptions`字段中，且`runtimeOptions`字段名是不可修改的
+![LOG-MESSAGE](http://show.newarray.vip/aliyun-cdn-api-action/responseBody.png)
+
+## 对于 parameters 格式的阐述（拓展）
+
+一般开发者**不需要**过多关注该部分内容，因为大多数使用场景下，我们并不需要高级配置，也就是`parameters.runtimeOptions`，除非你有一些**高级配置**需要配置，具体的配置项请参考[aliyun/tea-util](https://github.com/aliyun/tea-util/blob/10d152a3838594532b734956a3d72c81c94b4241/ts/src/client.ts#L8)
+
+对于基本的参数，只用放到字符串对象顶层即可，比如`action`，`domainName`，`functionNames`等，但是对于一些高级的配置项，需要放置于`runtimeOptions`字段中，且`runtimeOptions`字段名是不可修改的
 
 ```javascript
 '{
@@ -122,7 +130,7 @@ for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
 }
 ```
 
-这么做的目的是因为据我了解，大部分的配置项类型都是字符串，如果不做任何处理的话，可能在经过程序中的 `JSON.parse(parameters)`解析参数过后，会导致类型的问题致使运行程序失败
+这么做的目的是因为据我了解，大部分的配置项类型都是字符串，如果不做任何处理的话，在经过程序中的 `JSON.parse(parameters)`解析参数过后，可能因为配置字段类型的问题致使运行程序失败
 
 对于我这么做的方式，我也不确定它到底对不对，但是至少看起来能够保证程序正常的运行。
 
