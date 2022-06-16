@@ -1,105 +1,131 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+<P align="center">
+Aliyun Cdn api Github Action
+</P>
 
-# Create a JavaScript Action using TypeScript
+## 简介
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+一款基于阿里云 CDN API 的 Github Action，几乎支持所有的官方 API 调用，具体的细节和使用方式请结合[CDN API 参考](https://help.aliyun.com/document_detail/91856.html)
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+## 使用步骤
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+##### 1.明确意图
 
-## Create an action from this template
+明确你想要用该 Action 来对你的 CDN 做些什么配置。然后去[官方 API 文档](https://help.aliyun.com/document_detail/106661.html)找到对应的方法，这里以最简单的`DescribeCdnDomainConfigs`举例子
 
-Click the `Use this Template` and provide the new repo details for your action
+<!-- TODO:插入DescribeCdnDomainConfigs图片 -->
 
-## Code in Main
+##### 2.使用 Action
 
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+在你的 yml 文件中，使用该 Action 并传入正确的配置项即可即可
 
-Install the dependencies  
-```bash
-$ npm install
+```yml
+- name: DescribeCdnDomainConfigs
+  id: getDescribeCdnDomainConfigsConfig
+  # TODO:这里添加最后的插件版本
+  uses: ./
+  with:
+    accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+    accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+    parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "your domain name", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
 ```
 
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
-```
+##### 3.获取 API 返回结果
 
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
+该 Action 只有一个输出项`responseBody`，应该也够用了。主要根据该配置项能够获取两个有效信息
 
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
+- 1.调用 cdn api 是否成功
+- 2.能够根据`responseBody`获取一些有用的信息，比如获取配置项的的`configId`，通过 configId 可以在接下来的步骤中，实现对指定配置的更新和删除
 
-...
-```
+## 参数说明
 
-## Change action.yml
+##### 入参
 
-The action.yml defines the inputs and output for your action.
+- accessKeyId
+- accessKeySecret
+- parameters
 
-Update the action.yml with your name, description, inputs and outputs for your action.
+对于前两个参数，直接在阿里云控制台`AccessKey管理`中获取即可。而`parameters`参数比较重要，它的类型是字符串对象。形如：
 
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
+下面的例子是以`DescribeCdnDomainConfigs`方法做比喻，具体的配置项还需要结合你的使用场景做变更
 
 ```javascript
-import * as core from '@actions/core';
-...
+'{"action": "DescribeCdnDomainConfigs", "domainName": "your domain name", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
+```
 
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
+一切配置的信息都在该参数重配置，常见的有
+
+- action
+  - api 方法名，比如上述配置中的`DescribeCdnDomainConfigs`
+- domainName
+  - cdn 域名
+- functionNames
+  - 功能函数名称
+
+##### 出参
+
+- responseBody
+  - 调用该 api 的返回结果作为`输出项`
+
+```yml
+- name: DescribeCdnDomainConfigs
+  # 该步骤的id，后续的步骤可以通过steps.yourid.outputs.responseBody拿到域名配置信息
+  id: getDescribeCdnDomainConfigsConfig
+  # TODO:这里添加最后的插件版本
+  uses: ./
+  with:
+    accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+    accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+    parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "your domain name", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
+
+- name: View My Cdn Domain config
+  run: |
+    echo ${{steps.getDescribeCdnDomainConfigsConfig.outputs.responseBody}}
+```
+
+## 对于 parameters 格式的阐述
+
+一般开发者**不需要**过多关注下面的内容，除非你有一些**高级配置**需要配置，具体的配置项请参考[aliyun/tea-util](https://github.com/aliyun/tea-util/blob/10d152a3838594532b734956a3d72c81c94b4241/ts/src/client.ts#L8)
+
+基本的参数，只用放到字符串对象顶层即可，比如`action` `domainName` `functionNames`等，但是对于一些高级的配置项，需要放置于`runtimeOptions`字段中，且`runtimeOptions`字段名是不可修改的
+
+```javascript
+'{
+  "action": "DescribeCdnDomainConfigs",
+  "domainName": "your domain name",
+  "functionNames": "filetype_based_ttl_set,set_req_host_header",
+  "runtimeOptions": {
+    autoretry?: boolean;
+    ignoreSSL?: boolean;
+    maxAttempts?: number;
+    backoffPolicy?: string;
+    backoffPeriod?: number;
+    readTimeout?: number;
+    connectTimeout?: number;
+    httpProxy?: string;
+    httpsProxy?: string;
+    noProxy?: string;
+    ...
+  }
+}'
+
+```
+
+另外除了`runtimeOptions`字段，其他项的 value，在我的程序中都会进行判断，如果`typeof value === 'object'`，我都会调用`JSON.stringify`进行干涉
+
+```javascript
+let {action, runtimeOptions, ...requestOptions} = JSON.parse(parameters)
+
+for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
+  if (typeof optionValue === 'object') {
+    requestOptions[optionsKey] = Util.toJSONString(requestOptions.functions)
   }
 }
-
-run()
 ```
 
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
+这么做的目的是因为据我了解，大部分的配置项类型都是字符串，如果不做任何处理的话，可能在经过程序中的 `JSON.parse(parameters)`解析参数过后，会导致类型的问题致使运行程序失败
 
-## Publish to a distribution branch
+对于我这么做的方式，我也不确定它到底对不对，但是至少看起来能够保证程序正常的运行。
 
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
+## Contributing
 
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
-```yaml
-uses: ./
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
-
-## Usage:
-
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+Feel free to submit [issues](https://github.com/weirui88888/aliyun-cdn-api/issues) or [prs](https://github.com/weirui88888/aliyun-cdn-api/pulls) to me.
