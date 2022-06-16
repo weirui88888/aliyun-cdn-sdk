@@ -1,14 +1,6 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 254:
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse('{"_from":"@alicloud/credentials@^2","_id":"@alicloud/credentials@2.2.3","_inBundle":false,"_integrity":"sha512-h98BZimKCQ5xKiFCdWa2OMYaenEP6g5Fndm/l0zp8iuYWOShnvEwBPFmHyHmwpb60KwEJp0LILl1WiBTS+5a1w==","_location":"/@alicloud/credentials","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"@alicloud/credentials@^2","name":"@alicloud/credentials","escapedName":"@alicloud%2fcredentials","scope":"@alicloud","rawSpec":"^2","saveSpec":null,"fetchSpec":"^2"},"_requiredBy":["/@alicloud/gateway-spi","/@alicloud/openapi-client"],"_resolved":"https://nexus.bybutter.com/repository/npm-group/@alicloud/credentials/-/credentials-2.2.3.tgz","_shasum":"6c479082e3f627311e2537c0552e3e87a8ecd671","_spec":"@alicloud/credentials@^2","_where":"/Users/weirui05/Desktop/2022/aliyun-cdn-api/node_modules/@alicloud/openapi-client","author":{"name":"Alibaba Cloud SDK"},"bugs":{"url":"https://github.com/aliyun/nodejs-credentials/issues"},"bundleDependencies":false,"dependencies":{"@alicloud/tea-typescript":"^1.5.3","httpx":"^2.2.0","ini":"^1.3.5","kitx":"^2.0.0"},"deprecated":false,"description":"alibaba cloud node.js sdk credentials","devDependencies":{"@types/expect.js":"^0.3.29","@types/ini":"^1.3.30","@types/mocha":"^7.0.1","@types/rewire":"^2.5.28","@typescript-eslint/eslint-plugin":"^4.31.2","@typescript-eslint/parser":"^4.31.2","codecov":"^3.1.0","eslint":"^7.32.0","expect.js":"^0.3.1","mm":"^2.4.1","mocha":"^5.2.0","nyc":"^13.1.0","rewire":"^4.0.1","ts-node":"^8.6.2","typescript":"^3.7.5"},"files":["src","dist"],"homepage":"https://github.com/aliyun/nodejs-credentials#readme","keywords":["alibaba cloud","sdk","credentials"],"license":"MIT","main":"dist/client.js","name":"@alicloud/credentials","repository":{"type":"git","url":"git+https://github.com/aliyun/nodejs-credentials.git"},"scripts":{"build":"tsc","ci":"npm run cov && codecov","clean":"rm -rf coverage","cov":"nyc -e .ts -r=html -r=text -r=lcov npm run test","lint":"eslint --fix ./src --ext .ts","prepublishOnly":"tsc","test":"mocha -b -r ts-node/register test/**/*.test.ts --timeout 15000","test-integration":"mocha -b -r ts-node/register -R spec test/*.integration.ts"},"version":"2.2.3"}');
-
-/***/ }),
-
 /***/ 1565:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -22855,9 +22847,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DEFAULT_CLIENT = exports.DEFAULT_UA = void 0;
 const os = __importStar(__nccwpck_require__(2087));
-const package_json_1 = __importDefault(__nccwpck_require__(254));
-exports.DEFAULT_UA = `AlibabaCloud (${os.platform()}; ${os.arch()}) ` + `Node.js/${process.version} Core/${package_json_1.default.version}`;
-exports.DEFAULT_CLIENT = `Node.js(${process.version}), ${package_json_1.default.name}: ${package_json_1.default.version}`;
+const kitx_1 = __importDefault(__nccwpck_require__(8683));
+const path_1 = __importDefault(__nccwpck_require__(5622));
+const pkg = kitx_1.default.loadJSONSync(path_1.default.join(__dirname, '../../package.json'));
+exports.DEFAULT_UA = `AlibabaCloud (${os.platform()}; ${os.arch()}) ` +
+    `Node.js/${process.version} Core/${pkg.version}`;
+exports.DEFAULT_CLIENT = `Node.js(${process.version}), ${pkg.name}: ${pkg.version}`;
 //# sourceMappingURL=helper.js.map
 
 /***/ }),

@@ -2,7 +2,7 @@
 Aliyun Cdn Api Github Action 
 </h3>
 
-![language-typescript](https://img.shields.io/badge/typescript-blue?style=flat&logo=typescript&logoColor=white) ![aliyun-cdn-api-github-action](https://img.shields.io/badge/Github%20Action%20-Aliyun%20CDN%20Api-brightgreen?style=flat&logo=GitHub%20Actions&logoColor=white)
+![language-typescript](https://img.shields.io/badge/typescript-blue?style=flat&logo=typescript&logoColor=white) ![aliyun-cdn-sdk-github-action](https://img.shields.io/badge/Github%20Action%20-Aliyun%20CDN%20Api-brightgreen?style=flat&logo=GitHub%20Actions&logoColor=white)
 
 ## 简介
 
@@ -130,4 +130,4 @@ for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
 
 ## Contributing
 
-Feel free to submit [issues](https://github.com/weirui88888/aliyun-cdn-api/issues) or [prs](https://github.com/weirui88888/aliyun-cdn-api/pulls) to me.
+Feel free to submit [issues](https://github.com/weirui88888/aliyun-cdn-sdk/issues) or [prs](https://github.com/weirui88888/aliyun-cdn-sdk/pulls) to me.
