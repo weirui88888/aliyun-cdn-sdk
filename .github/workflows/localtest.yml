@@ -1,0 +1,62 @@
+name: 'use action in local'
+on: [push]
+
+jobs:
+  build: # make sure build/ci work properly
+    runs-on: ubuntu-latest
+    steps:
+      # use this action in current package
+      - uses: actions/checkout@v3
+
+      - name: View Folder
+        run: |
+          ls
+          cat package.json
+
+      - name: Test DescribeCdnDomainConfigs
+        id: getDescribeCdnDomainConfigsConfig
+        uses: ./
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "hexo.newarray.vip", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
+
+      - name: Test StartCdnDomain
+        id: getStartCdnDomain
+        uses: ./
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "StartCdnDomain", "domainName": "gus.newarray.vip"}'
+
+      - name: Test DescribeCdnDeletedDomains
+        id: getDescribeCdnDeletedDomains
+        uses: ./
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "DescribeCdnDeletedDomains", "pageNumber": 1, "pageSize":10}'
+
+      - name: View Gus DescribeCdnDomainConfigs
+        id: getGusDescribeCdnDomainConfigsConfig
+        uses: ./
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "gus.newarray.vip", "functionNames": "filetype_based_ttl_set" }'
+
+      - name: Gus BatchSetCdnDomainConfig
+        id: getBatchSetCdnDomainConfig
+        uses: ./
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action":"BatchSetCdnDomainConfig","domainNames":"gus.newarray.vip","functions" : [{"functionArgs": [{"argName": "file_type","argValue": "js"},{"argName": "ttl","argValue": "50"}],"functionName": "filetype_based_ttl_set"} ] }'
+
+      - name: View
+        run: |
+          echo ${{steps.getDescribeCdnDomainConfigsConfig.outputs.responseBody}}
+          echo ${{steps.getStartCdnDomain.outputs.responseBody}}
+          echo ${{steps.getDescribeCdnDeletedDomains.outputs.responseBody}}
+          echo ${{steps.getGusDescribeCdnDomainConfigsConfig.outputs.responseBody}}
+          echo ${{steps.getBatchSetCdnDomainConfig.outputs.responseBody}}
