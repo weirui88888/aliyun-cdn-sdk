@@ -57,7 +57,12 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+// @ts-nocheck
+const tea_console_1 = __importDefault(__nccwpck_require__(5477));
 const $OpenApi = __importStar(__nccwpck_require__(6642));
 const cdn20180510_1 = __importStar(__nccwpck_require__(3121)), $Cdn = cdn20180510_1;
 const tea_util_1 = __importStar(__nccwpck_require__(1979)), $Util = tea_util_1;
@@ -77,31 +82,24 @@ class Client {
             core.info(`you use this action with parameters:${parameters}`);
             core.info('-------------------------------- view parameters end --------------------------------');
             const client = Client.createCdnClient(accessKeyId, accessKeySecret);
-            let _a = JSON.parse(parameters), { action } = _a, requestOptions = __rest(_a, ["action"]);
-            core.info('------------------------------- view function start -------------------------------');
-            if (requestOptions.functions &&
-                typeof requestOptions.functions !== 'string') {
-                requestOptions.functions = tea_util_1.default.toJSONString(requestOptions.functions);
+            let _a = JSON.parse(parameters), { action, runtimeOptions } = _a, requestOptions = __rest(_a, ["action", "runtimeOptions"]);
+            for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
+                if (typeof optionValue === 'object') {
+                    requestOptions[optionsKey] = tea_util_1.default.toJSONString(requestOptions.functions);
+                }
             }
-            core.info('-------------------------------- view function end --------------------------------');
-            const hasRuntimeOptions = !!requestOptions.runtimeOptions;
-            const runtimeOptions = hasRuntimeOptions
-                ? new $Util.RuntimeOptions(requestOptions.runtimeOptions)
+            const runtime = !!runtimeOptions
+                ? new $Util.RuntimeOptions(runtimeOptions)
                 : new $Util.RuntimeOptions({});
-            if (hasRuntimeOptions) {
-                delete requestOptions.runtimeOptions;
-            }
             let RequestActionName = `${action}Request`;
             let ActionName = action.replace(action[0], action[0].toLowerCase());
             let CdnSdkApiName = `${ActionName}WithOptions`;
-            core.info('------------------------------- view your sdk api name start -------------------------------');
             core.info(`you use this action will call sdk api name:${CdnSdkApiName} by your input parameters.action:${ActionName}`);
-            core.info('-------------------------------- view your sdk api name end --------------------------------');
             try {
                 const options = new $Cdn[RequestActionName](requestOptions);
-                const response = yield client[CdnSdkApiName](options, runtimeOptions);
+                const response = yield client[CdnSdkApiName](options, runtime);
                 core.info('------------------------------- view your sdk api response start -------------------------------');
-                console.log(response);
+                tea_console_1.default.log(response);
                 core.info('-------------------------------- view your sdk api response end --------------------------------');
                 return response;
             }
@@ -24723,6 +24721,64 @@ class Client {
             return '';
         }
         return encode(param);
+    }
+}
+exports.default = Client;
+//# sourceMappingURL=client.js.map
+
+/***/ }),
+
+/***/ 5477:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class Client {
+    /**
+     * Console val with log level
+     * @param val the printing string
+     * @return void
+     * @example [LOG] tea console example
+     */
+    static log(val) {
+        console.log('[LOG] ' + val);
+    }
+    /**
+     * Console val with info level
+     * @param val the printing string
+     * @return void
+     * @example [INFO] tea console example
+     */
+    static info(val) {
+        console.log('[INFO] ' + val);
+    }
+    /**
+     * Console val with warning level
+     * @param val the printing string
+     * @return void
+     * @example [WARNING] tea console example
+     */
+    static warning(val) {
+        console.log('[WARNING] ' + val);
+    }
+    /**
+     * Console val with debug level
+     * @param val the printing string
+     * @return void
+     * @example [DEBUG] tea console example
+     */
+    static debug(val) {
+        console.log('[DEBUG] ' + val);
+    }
+    /**
+     * Console val with error level
+     * @param val the printing string
+     * @return void
+     * @example [ERROR] tea console example
+     */
+    static error(val) {
+        console.log('[ERROR] ' + val);
     }
 }
 exports.default = Client;

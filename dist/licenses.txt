@@ -66,6 +66,9 @@ ISC
 @alicloud/openapi-util
 ISC
 
+@alicloud/tea-console
+Apache-2.0
+
 @alicloud/tea-typescript
 ISC
 

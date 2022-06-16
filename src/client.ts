@@ -5,6 +5,7 @@ import Cdn, * as $Cdn from '@alicloud/cdn20180510'
 import * as $tea from '@alicloud/tea-typescript'
 import Util, * as $Util from '@alicloud/tea-util'
 import * as core from '@actions/core'
+import Console from '@alicloud/tea-console'
 
 export default class Client {
   static createCdnClient(accessKeyId: string, accessKeySecret: string): Cdn {
@@ -31,29 +32,17 @@ export default class Client {
 
     const client = Client.createCdnClient(accessKeyId, accessKeySecret)
 
-    let {action, ...requestOptions} = JSON.parse(parameters)
-    core.info(
-      '------------------------------- view function start -------------------------------'
-    )
-    if (
-      requestOptions.functions &&
-      typeof requestOptions.functions !== 'string'
-    ) {
-      requestOptions.functions = Util.toJSONString(requestOptions.functions)
+    let {action, runtimeOptions, ...requestOptions} = JSON.parse(parameters)
+
+    for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
+      if (typeof optionValue === 'object') {
+        requestOptions[optionsKey] = Util.toJSONString(requestOptions.functions)
+      }
     }
-    core.info(
-      '-------------------------------- view function end --------------------------------'
-    )
 
-    const hasRuntimeOptions = !!requestOptions.runtimeOptions
-
-    const runtimeOptions = hasRuntimeOptions
-      ? new $Util.RuntimeOptions(requestOptions.runtimeOptions)
+    const runtime = !!runtimeOptions
+      ? new $Util.RuntimeOptions(runtimeOptions)
       : new $Util.RuntimeOptions({})
-
-    if (hasRuntimeOptions) {
-      delete requestOptions.runtimeOptions
-    }
 
     let RequestActionName = `${action}Request`
 
@@ -62,23 +51,17 @@ export default class Client {
     let CdnSdkApiName = `${ActionName}WithOptions`
 
     core.info(
-      '------------------------------- view your sdk api name start -------------------------------'
-    )
-    core.info(
       `you use this action will call sdk api name:${CdnSdkApiName} by your input parameters.action:${ActionName}`
-    )
-    core.info(
-      '-------------------------------- view your sdk api name end --------------------------------'
     )
 
     try {
       const options = new $Cdn[RequestActionName](requestOptions)
-      const response = await client[CdnSdkApiName](options, runtimeOptions)
+      const response = await client[CdnSdkApiName](options, runtime)
 
       core.info(
         '------------------------------- view your sdk api response start -------------------------------'
       )
-      console.log(response)
+      Console.log(response)
       core.info(
         '-------------------------------- view your sdk api response end --------------------------------'
       )
