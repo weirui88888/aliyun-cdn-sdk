@@ -32,12 +32,14 @@ export default class Client {
     const client = Client.createCdnClient(accessKeyId, accessKeySecret)
 
     let {action, ...requestOptions} = JSON.parse(parameters)
-    console.log(requestOptions)
     core.info(
       '------------------------------- view function start -------------------------------'
     )
-    if (requestOptions.functions) {
-      core.info(Util.toJSONString(requestOptions.functions))
+    if (
+      requestOptions.functions &&
+      typeof requestOptions.functions !== 'string'
+    ) {
+      requestOptions.functions = Util.toJSONString(requestOptions.functions)
     }
     core.info(
       '-------------------------------- view function end --------------------------------'

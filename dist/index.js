@@ -78,10 +78,10 @@ class Client {
             core.info('-------------------------------- view parameters end --------------------------------');
             const client = Client.createCdnClient(accessKeyId, accessKeySecret);
             let _a = JSON.parse(parameters), { action } = _a, requestOptions = __rest(_a, ["action"]);
-            console.log(requestOptions);
             core.info('------------------------------- view function start -------------------------------');
-            if (requestOptions.functions) {
-                core.info(tea_util_1.default.toJSONString(requestOptions.functions));
+            if (requestOptions.functions &&
+                typeof requestOptions.functions !== 'string') {
+                requestOptions.functions = tea_util_1.default.toJSONString(requestOptions.functions);
             }
             core.info('-------------------------------- view function end --------------------------------');
             const hasRuntimeOptions = !!requestOptions.runtimeOptions;
