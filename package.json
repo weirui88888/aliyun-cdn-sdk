@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "aliyun-cdn-sdk",
   "version": "1.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "supports all standard aliyun cdn apis for easy use in github actions",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git@github.com:weirui88888/aliyun-cdn-api.git"
   },
   "keywords": [
     "actions",

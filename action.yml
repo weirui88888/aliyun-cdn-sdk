@@ -1,4 +1,4 @@
-name: 'Aliyun Cdn Api'
+name: 'Aliyun Cdn Sdk'
 description: 'supports all standard aliyun cdn apis for easy use in github actions'
 author: 'weirui88888'
 inputs:
@@ -17,3 +17,6 @@ outputs:
 runs:
   using: 'node12'
   main: 'dist/index.js'
+branding:
+  icon: 'cloud'
+  color: 'yellow'

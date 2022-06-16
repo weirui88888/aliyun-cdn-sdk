@@ -1,6 +1,8 @@
-<P align="center">
-Aliyun Cdn api Github Action
-</P>
+<h3 align="center">
+Aliyun Cdn Api Github Action 
+</h3>
+
+![language-typescript](https://img.shields.io/badge/typescript-blue?style=flat&logo=typescript&logoColor=white) ![aliyun-cdn-api-github-action](https://img.shields.io/badge/Github%20Action%20-Aliyun%20CDN%20Api-brightgreen?style=flat&logo=GitHub%20Actions&logoColor=white)
 
 ## 简介
 
