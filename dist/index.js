@@ -63,10 +63,11 @@ const cdn20180510_1 = __importStar(__nccwpck_require__(3121)), $Cdn = cdn2018051
 const tea_util_1 = __importStar(__nccwpck_require__(1979)), $Util = tea_util_1;
 const core = __importStar(__nccwpck_require__(2186));
 const log = console.log;
-const logger = (message, origin) => {
-    log(`\x1b[32m[ ------${message} log start ------ ]\x1b[0m`);
+const logger = (message, origin, bgColor = '42', fontColor = '37') => {
+    log(`\x1b[${bgColor};${fontColor}m[ ------${message} log start ------ ]\x1b[0m`);
     log(origin);
-    log(`\x1b[32m[ ------ ${message} log end  ------ ]\x1b[0m`);
+    log(`\x1b[${bgColor};${fontColor}m[ ------ ${message} log end  ------ ]\x1b[0m`);
+    log('\n');
 };
 class Client {
     static createCdnClient(accessKeyId, accessKeySecret) {

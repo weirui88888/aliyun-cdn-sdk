@@ -8,10 +8,20 @@ import * as core from '@actions/core'
 
 const log = console.log
 
-const logger = (message: string, origin: any) => {
-  log(`\x1b[32m[ ------${message} log start ------ ]\x1b[0m`)
+const logger = (
+  message: string,
+  origin: any,
+  bgColor: string = '42',
+  fontColor: string = '37'
+) => {
+  log(
+    `\x1b[${bgColor};${fontColor}m[ ------${message} log start ------ ]\x1b[0m`
+  )
   log(origin)
-  log(`\x1b[32m[ ------ ${message} log end  ------ ]\x1b[0m`)
+  log(
+    `\x1b[${bgColor};${fontColor}m[ ------ ${message} log end  ------ ]\x1b[0m`
+  )
+  log('\n')
 }
 
 export default class Client {
