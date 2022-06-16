@@ -33,6 +33,10 @@ export default class Client {
 
     let {action, ...requestOptions} = JSON.parse(parameters)
 
+    if (requestOptions.functions) {
+      core.debug(Util.toJSONString(requestOptions.functions))
+    }
+
     const hasRuntimeOptions = !!requestOptions.runtimeOptions
 
     const runtimeOptions = hasRuntimeOptions
