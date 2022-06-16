@@ -7,8 +7,9 @@ import Util, * as $Util from '@alicloud/tea-util'
 import * as core from '@actions/core'
 import chalk from 'chalk'
 
-const log = console.log
-log(chalk.blue('Hello') + ' World' + chalk.red('!'))
+console.log(chalk.blue(123))
+// const log = console.log
+// log(chalk.blue('Hello') + ' World' + chalk.red('!'))
 
 // const logger = (message: string, origin: any) => {
 //   log(chalk.white.bgRed.bold(`------${message} log start ------`))

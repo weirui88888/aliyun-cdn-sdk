@@ -66,8 +66,9 @@ const cdn20180510_1 = __importStar(__nccwpck_require__(3121)), $Cdn = cdn2018051
 const tea_util_1 = __importStar(__nccwpck_require__(1979)), $Util = tea_util_1;
 const core = __importStar(__nccwpck_require__(2186));
 const chalk_1 = __importDefault(__nccwpck_require__(7777));
-const log = console.log;
-log(chalk_1.default.blue('Hello') + ' World' + chalk_1.default.red('!'));
+console.log(chalk_1.default.blue(123));
+// const log = console.log
+// log(chalk.blue('Hello') + ' World' + chalk.red('!'))
 // const logger = (message: string, origin: any) => {
 //   log(chalk.white.bgRed.bold(`------${message} log start ------`))
 //   log(origin)
