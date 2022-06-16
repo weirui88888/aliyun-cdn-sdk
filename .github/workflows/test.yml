@@ -54,7 +54,7 @@ jobs:
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
-          parameters: '{"action":"BatchSetCdnDomainConfig","domainNames":"gus.newarray.vip","functions" : "[{functionArgs:[{argName:file_type,argValue:html}] ,functionName:filetype_based_ttl_set}]"}'
+          parameters: '{"action":"BatchSetCdnDomainConfig","domainNames":"gus.newarray.vip","functions" : [{"functionArgs": [{"argName": "file_type","argValue": "png"},{"argName": "ttl","argValue": "500000"}],"functionName": "filetype_based_ttl_set"} ] }'
 
       - name: View
         run: |
