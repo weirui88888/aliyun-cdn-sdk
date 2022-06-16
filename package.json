@@ -32,7 +32,8 @@
     "@alicloud/cdn20180510": "^1.0.12",
     "@alicloud/openapi-client": "^0.4.1",
     "@alicloud/tea-console": "^1.0.0",
-    "@alicloud/tea-typescript": "^1.7.2"
+    "@alicloud/tea-typescript": "^1.7.2",
+    "chalk": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^16.10.5",

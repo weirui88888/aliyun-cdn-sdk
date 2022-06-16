@@ -5,6 +5,15 @@ import Cdn, * as $Cdn from '@alicloud/cdn20180510'
 import * as $tea from '@alicloud/tea-typescript'
 import Util, * as $Util from '@alicloud/tea-util'
 import * as core from '@actions/core'
+import chalk from 'chalk'
+
+const log = console.log
+
+const logger = (message: string, origin: any) => {
+  log(chalk.white.bgRed.bold(`------${message} log start ------`))
+  log(origin)
+  log(chalk.white.bgRed.bold(`------${message} log end ------`))
+}
 
 export default class Client {
   static createCdnClient(accessKeyId: string, accessKeySecret: string): Cdn {
@@ -21,12 +30,9 @@ export default class Client {
     accessKeySecret: string,
     parameters: string
   ): Promise<any> {
-    core.info(
-      '------------------------------- view parameters start -------------------------------'
-    )
-    core.info(`you use this action with parameters:${parameters}`)
-    core.info(
-      '-------------------------------- view parameters end --------------------------------'
+    logger(
+      'view parameters',
+      `you use this action with parameters:${parameters}`
     )
 
     const client = Client.createCdnClient(accessKeyId, accessKeySecret)
@@ -49,21 +55,22 @@ export default class Client {
 
     let CdnSdkApiName = `${ActionName}WithOptions`
 
-    core.info(
-      `you use this action will call sdk api name:${CdnSdkApiName} by your input parameters.action:${ActionName}`
+    logger(
+      'view sdk api name',
+      `you use this action will call sdk api name:${CdnSdkApiName} by your input`
+    )
+
+    logger(
+      'view cdn open api name',
+      `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`
     )
 
     try {
       const options = new $Cdn[RequestActionName](requestOptions)
       const response = await client[CdnSdkApiName](options, runtime)
 
-      core.info(
-        '------------------------------- view your sdk api response start -------------------------------'
-      )
-      console.log(response)
-      core.info(
-        '-------------------------------- view your sdk api response end --------------------------------'
-      )
+      logger('view your sdk api response', response)
+
       return response
     } catch (error) {
       // @ts-ignore
