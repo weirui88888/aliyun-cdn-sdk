@@ -23,8 +23,7 @@ Aliyun Cdn Api Github Action
 ```yml
 - name: DescribeCdnDomainConfigs
   id: getDescribeCdnDomainConfigsConfig
-  # TODO:这里添加最后的插件版本
-  uses: ./
+  uses: weirui88888/aliyun-cdn-sdk@v1.0.0
   with:
     accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
     accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
@@ -72,8 +71,7 @@ Aliyun Cdn Api Github Action
 - name: DescribeCdnDomainConfigs
   # 该步骤的id，后续的步骤可以通过steps.yourid.outputs.responseBody拿到域名配置信息
   id: getDescribeCdnDomainConfigsConfig
-  # TODO:这里添加最后的插件版本
-  uses: ./
+  uses: weirui88888/aliyun-cdn-sdk@v1.0.0
   with:
     accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
     accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
