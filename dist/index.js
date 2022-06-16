@@ -57,23 +57,17 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const $OpenApi = __importStar(__nccwpck_require__(6642));
 const cdn20180510_1 = __importStar(__nccwpck_require__(3121)), $Cdn = cdn20180510_1;
 const tea_util_1 = __importStar(__nccwpck_require__(1979)), $Util = tea_util_1;
 const core = __importStar(__nccwpck_require__(2186));
-const chalk_1 = __importDefault(__nccwpck_require__(7777));
-console.log(chalk_1.default.blue(123));
-// const log = console.log
-// log(chalk.blue('Hello') + ' World' + chalk.red('!'))
-// const logger = (message: string, origin: any) => {
-//   log(chalk.white.bgRed.bold(`------${message} log start ------`))
-//   log(origin)
-//   log(chalk.white.bgRed.bold(`------${message} log end ------`))
-// }
+const log = console.log;
+const logger = (message, origin) => {
+    log(`\x1b[32m[ ------${message} log start ------ ]\x1b[0m`);
+    log(origin);
+    log(`\x1b[32m[ ------ ${message} log end  ------ ]\x1b[0m`);
+};
 class Client {
     static createCdnClient(accessKeyId, accessKeySecret) {
         const config = new $OpenApi.Config({
@@ -85,10 +79,7 @@ class Client {
     }
     static Sdk(accessKeyId, accessKeySecret, parameters) {
         return __awaiter(this, void 0, void 0, function* () {
-            // logger(
-            //   'view parameters',
-            //   `you use this action with parameters:${parameters}`
-            // )
+            logger('view parameters', `you use this action with parameters:${parameters}`);
             const client = Client.createCdnClient(accessKeyId, accessKeySecret);
             let _a = JSON.parse(parameters), { action, runtimeOptions } = _a, requestOptions = __rest(_a, ["action", "runtimeOptions"]);
             for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
@@ -102,18 +93,12 @@ class Client {
             let RequestActionName = `${action}Request`;
             let ActionName = action.replace(action[0], action[0].toLowerCase());
             let CdnSdkApiName = `${ActionName}WithOptions`;
-            // logger(
-            //   'view sdk api name',
-            //   `you use this action will call sdk api name:${CdnSdkApiName} by your input`
-            // )
-            // logger(
-            //   'view cdn open api name',
-            //   `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`
-            // )
+            logger('view sdk api name', `you use this action will call sdk api name:${CdnSdkApiName} by your input`);
+            logger('view cdn open api name', `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`);
             try {
                 const options = new $Cdn[RequestActionName](requestOptions);
                 const response = yield client[CdnSdkApiName](options, runtime);
-                // logger('view your sdk api response', response)
+                logger('view your sdk api response', response);
                 return response;
             }
             catch (error) {
@@ -25557,272 +25542,6 @@ exports.default = Client;
 
 /***/ }),
 
-/***/ 7777:
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
-
-"use strict";
-// ESM COMPAT FLAG
-__nccwpck_require__.r(__webpack_exports__);
-
-// EXPORTS
-__nccwpck_require__.d(__webpack_exports__, {
-  "Chalk": () => (/* binding */ Chalk),
-  "chalkStderr": () => (/* binding */ chalkStderr),
-  "default": () => (/* binding */ source),
-  "supportsColor": () => (/* binding */ stdoutColor),
-  "supportsColorStderr": () => (/* binding */ stderrColor)
-});
-
-// EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?#ansi-styles
-var _notfound_ansi_styles = __nccwpck_require__(16);
-// EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?#supports-color
-var _notfound_supports_color = __nccwpck_require__(5210);
-;// CONCATENATED MODULE: ./node_modules/chalk/source/utilities.js
-// TODO: When targeting Node.js 16, use `String.prototype.replaceAll`.
-function stringReplaceAll(string, substring, replacer) {
-	let index = string.indexOf(substring);
-	if (index === -1) {
-		return string;
-	}
-
-	const substringLength = substring.length;
-	let endIndex = 0;
-	let returnValue = '';
-	do {
-		returnValue += string.substr(endIndex, index - endIndex) + substring + replacer;
-		endIndex = index + substringLength;
-		index = string.indexOf(substring, endIndex);
-	} while (index !== -1);
-
-	returnValue += string.slice(endIndex);
-	return returnValue;
-}
-
-function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
-	let endIndex = 0;
-	let returnValue = '';
-	do {
-		const gotCR = string[index - 1] === '\r';
-		returnValue += string.substr(endIndex, (gotCR ? index - 1 : index) - endIndex) + prefix + (gotCR ? '\r\n' : '\n') + postfix;
-		endIndex = index + 1;
-		index = string.indexOf('\n', endIndex);
-	} while (index !== -1);
-
-	returnValue += string.slice(endIndex);
-	return returnValue;
-}
-
-;// CONCATENATED MODULE: ./node_modules/chalk/source/index.js
-
-
-
-
-const {stdout: stdoutColor, stderr: stderrColor} = _notfound_supports_color;
-
-const GENERATOR = Symbol('GENERATOR');
-const STYLER = Symbol('STYLER');
-const IS_EMPTY = Symbol('IS_EMPTY');
-
-// `supportsColor.level` → `ansiStyles.color[name]` mapping
-const levelMapping = [
-	'ansi',
-	'ansi',
-	'ansi256',
-	'ansi16m',
-];
-
-const styles = Object.create(null);
-
-const applyOptions = (object, options = {}) => {
-	if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
-		throw new Error('The `level` option should be an integer from 0 to 3');
-	}
-
-	// Detect level if not set manually
-	const colorLevel = stdoutColor ? stdoutColor.level : 0;
-	object.level = options.level === undefined ? colorLevel : options.level;
-};
-
-class Chalk {
-	constructor(options) {
-		// eslint-disable-next-line no-constructor-return
-		return chalkFactory(options);
-	}
-}
-
-const chalkFactory = options => {
-	const chalk = (...strings) => strings.join(' ');
-	applyOptions(chalk, options);
-
-	Object.setPrototypeOf(chalk, createChalk.prototype);
-
-	return chalk;
-};
-
-function createChalk(options) {
-	return chalkFactory(options);
-}
-
-Object.setPrototypeOf(createChalk.prototype, Function.prototype);
-
-for (const [styleName, style] of Object.entries(_notfound_ansi_styles)) {
-	styles[styleName] = {
-		get() {
-			const builder = createBuilder(this, createStyler(style.open, style.close, this[STYLER]), this[IS_EMPTY]);
-			Object.defineProperty(this, styleName, {value: builder});
-			return builder;
-		},
-	};
-}
-
-styles.visible = {
-	get() {
-		const builder = createBuilder(this, this[STYLER], true);
-		Object.defineProperty(this, 'visible', {value: builder});
-		return builder;
-	},
-};
-
-const getModelAnsi = (model, level, type, ...arguments_) => {
-	if (model === 'rgb') {
-		if (level === 'ansi16m') {
-			return _notfound_ansi_styles[type].ansi16m(...arguments_);
-		}
-
-		if (level === 'ansi256') {
-			return _notfound_ansi_styles[type].ansi256(_notfound_ansi_styles.rgbToAnsi256(...arguments_));
-		}
-
-		return _notfound_ansi_styles[type].ansi(_notfound_ansi_styles.rgbToAnsi(...arguments_));
-	}
-
-	if (model === 'hex') {
-		return getModelAnsi('rgb', level, type, ..._notfound_ansi_styles.hexToRgb(...arguments_));
-	}
-
-	return _notfound_ansi_styles[type][model](...arguments_);
-};
-
-const usedModels = ['rgb', 'hex', 'ansi256'];
-
-for (const model of usedModels) {
-	styles[model] = {
-		get() {
-			const {level} = this;
-			return function (...arguments_) {
-				const styler = createStyler(getModelAnsi(model, levelMapping[level], 'color', ...arguments_), _notfound_ansi_styles.color.close, this[STYLER]);
-				return createBuilder(this, styler, this[IS_EMPTY]);
-			};
-		},
-	};
-
-	const bgModel = 'bg' + model[0].toUpperCase() + model.slice(1);
-	styles[bgModel] = {
-		get() {
-			const {level} = this;
-			return function (...arguments_) {
-				const styler = createStyler(getModelAnsi(model, levelMapping[level], 'bgColor', ...arguments_), _notfound_ansi_styles.bgColor.close, this[STYLER]);
-				return createBuilder(this, styler, this[IS_EMPTY]);
-			};
-		},
-	};
-}
-
-const proto = Object.defineProperties(() => {}, {
-	...styles,
-	level: {
-		enumerable: true,
-		get() {
-			return this[GENERATOR].level;
-		},
-		set(level) {
-			this[GENERATOR].level = level;
-		},
-	},
-});
-
-const createStyler = (open, close, parent) => {
-	let openAll;
-	let closeAll;
-	if (parent === undefined) {
-		openAll = open;
-		closeAll = close;
-	} else {
-		openAll = parent.openAll + open;
-		closeAll = close + parent.closeAll;
-	}
-
-	return {
-		open,
-		close,
-		openAll,
-		closeAll,
-		parent,
-	};
-};
-
-const createBuilder = (self, _styler, _isEmpty) => {
-	// Single argument is hot path, implicit coercion is faster than anything
-	// eslint-disable-next-line no-implicit-coercion
-	const builder = (...arguments_) => applyStyle(builder, (arguments_.length === 1) ? ('' + arguments_[0]) : arguments_.join(' '));
-
-	// We alter the prototype because we must return a function, but there is
-	// no way to create a function with a different prototype
-	Object.setPrototypeOf(builder, proto);
-
-	builder[GENERATOR] = self;
-	builder[STYLER] = _styler;
-	builder[IS_EMPTY] = _isEmpty;
-
-	return builder;
-};
-
-const applyStyle = (self, string) => {
-	if (self.level <= 0 || !string) {
-		return self[IS_EMPTY] ? '' : string;
-	}
-
-	let styler = self[STYLER];
-
-	if (styler === undefined) {
-		return string;
-	}
-
-	const {openAll, closeAll} = styler;
-	if (string.includes('\u001B')) {
-		while (styler !== undefined) {
-			// Replace any instances already present with a re-opening code
-			// otherwise only the part of the string until said closing code
-			// will be colored, and the rest will simply be 'plain'.
-			string = stringReplaceAll(string, styler.close, styler.open);
-
-			styler = styler.parent;
-		}
-	}
-
-	// We can move both next actions out of loop, because remaining actions in loop won't have
-	// any/visible effect on parts we add here. Close the styling before a linebreak and reopen
-	// after next line to fix a bleed issue on macOS: https://github.com/chalk/chalk/pull/92
-	const lfIndex = string.indexOf('\n');
-	if (lfIndex !== -1) {
-		string = stringEncaseCRLFWithFirstIndex(string, closeAll, openAll, lfIndex);
-	}
-
-	return openAll + string + closeAll;
-};
-
-Object.defineProperties(createChalk.prototype, styles);
-
-const chalk = createChalk();
-const chalkStderr = createChalk({level: stderrColor ? stderrColor.level : 0});
-
-
-
-/* harmony default export */ const source = (chalk);
-
-
-/***/ }),
-
 /***/ 8222:
 /***/ ((module, exports, __nccwpck_require__) => {
 
@@ -28008,22 +27727,6 @@ exports.debug = debug; // for test
 
 /***/ }),
 
-/***/ 16:
-/***/ ((module) => {
-
-module.exports = eval("require")("");
-
-
-/***/ }),
-
-/***/ 5210:
-/***/ ((module) => {
-
-module.exports = eval("require")("");
-
-
-/***/ }),
-
 /***/ 2357:
 /***/ ((module) => {
 
@@ -28185,34 +27888,6 @@ module.exports = require("zlib");
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__nccwpck_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__nccwpck_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";

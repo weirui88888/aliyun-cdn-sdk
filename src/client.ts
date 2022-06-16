@@ -5,17 +5,14 @@ import Cdn, * as $Cdn from '@alicloud/cdn20180510'
 import * as $tea from '@alicloud/tea-typescript'
 import Util, * as $Util from '@alicloud/tea-util'
 import * as core from '@actions/core'
-import chalk from 'chalk'
 
-console.log(chalk.blue(123))
-// const log = console.log
-// log(chalk.blue('Hello') + ' World' + chalk.red('!'))
+const log = console.log
 
-// const logger = (message: string, origin: any) => {
-//   log(chalk.white.bgRed.bold(`------${message} log start ------`))
-//   log(origin)
-//   log(chalk.white.bgRed.bold(`------${message} log end ------`))
-// }
+const logger = (message: string, origin: any) => {
+  log(`\x1b[32m[ ------${message} log start ------ ]\x1b[0m`)
+  log(origin)
+  log(`\x1b[32m[ ------ ${message} log end  ------ ]\x1b[0m`)
+}
 
 export default class Client {
   static createCdnClient(accessKeyId: string, accessKeySecret: string): Cdn {
@@ -32,10 +29,10 @@ export default class Client {
     accessKeySecret: string,
     parameters: string
   ): Promise<any> {
-    // logger(
-    //   'view parameters',
-    //   `you use this action with parameters:${parameters}`
-    // )
+    logger(
+      'view parameters',
+      `you use this action with parameters:${parameters}`
+    )
 
     const client = Client.createCdnClient(accessKeyId, accessKeySecret)
 
@@ -57,21 +54,21 @@ export default class Client {
 
     let CdnSdkApiName = `${ActionName}WithOptions`
 
-    // logger(
-    //   'view sdk api name',
-    //   `you use this action will call sdk api name:${CdnSdkApiName} by your input`
-    // )
+    logger(
+      'view sdk api name',
+      `you use this action will call sdk api name:${CdnSdkApiName} by your input`
+    )
 
-    // logger(
-    //   'view cdn open api name',
-    //   `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`
-    // )
+    logger(
+      'view cdn open api name',
+      `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`
+    )
 
     try {
       const options = new $Cdn[RequestActionName](requestOptions)
       const response = await client[CdnSdkApiName](options, runtime)
 
-      // logger('view your sdk api response', response)
+      logger('view your sdk api response', response)
 
       return response
     } catch (error) {
