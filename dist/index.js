@@ -97,7 +97,9 @@ class Client {
             logger('view sdk api name', `you use this action will call sdk api name:${CdnSdkApiName} by your input`, '41');
             logger('view cdn open api name', `your open api name is ${action}, you can find more message and support in https://help.aliyun.com/document_detail/106661.html`, '44');
             try {
+                // @ts-ignore
                 const options = new $Cdn[RequestActionName](requestOptions);
+                // @ts-ignore
                 const response = yield client[CdnSdkApiName](options, runtime);
                 logger('view your sdk api response', response);
                 return response;
