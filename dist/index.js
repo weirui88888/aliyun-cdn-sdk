@@ -85,7 +85,7 @@ class Client {
             let _a = JSON.parse(parameters), { action, runtimeOptions } = _a, requestOptions = __rest(_a, ["action", "runtimeOptions"]);
             for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
                 if (typeof optionValue === 'object') {
-                    requestOptions[optionsKey] = tea_util_1.default.toJSONString(requestOptions.functions);
+                    requestOptions[optionsKey] = tea_util_1.default.toJSONString(optionValue);
                 }
             }
             const runtime = !!runtimeOptions

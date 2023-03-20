@@ -15,7 +15,7 @@ outputs:
   responseBody:
     description: 'responseBody with your input'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: 'cloud'
