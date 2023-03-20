@@ -20,7 +20,7 @@ Aliyun Cdn Sdk Github Action
 
 ##### 2.使用 Action
 
-在你的 yml 文件中，使用该 Action 并传入正确的配置项即可即可
+在你的 yml 文件中，使用该 Action 并传入正确的配置项即可
 
 ```yml
 - name: DescribeCdnDomainConfigs
