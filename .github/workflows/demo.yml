@@ -1,21 +1,25 @@
-name: 'use this action with local file'
-on: [push]
+name: 'use this action with online file'
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
       # use this action in current package
-      - uses: actions/checkout@v3
+      # - uses: actions/checkout@v3
 
-      - name: View Folder
-        run: |
-          ls
-          cat package.json
+      # - name: View Folder
+      #   run: |
+      #     ls
+      #     cat package.json
 
       - name: Test DescribeCdnDomainConfigs
         id: getDescribeCdnDomainConfigsConfig
-        uses: ./
+        uses: weirui88888/aliyun-cdn-sdk@v1.0.1
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
@@ -23,7 +27,7 @@ jobs:
 
       - name: Test DescribeCdnDeletedDomains
         id: getDescribeCdnDeletedDomains
-        uses: ./
+        uses: weirui88888/aliyun-cdn-sdk@v1.0.1
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
