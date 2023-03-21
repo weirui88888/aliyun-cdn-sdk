@@ -12,7 +12,7 @@ jobs:
         run: |
           cat package.json
 
-      - name: Build a compressed version with set-output
+      - name: Deprecated!!!!!Build a compressed version with set-output(view https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/)
         id: versionGeneratorSetOutput
         run: |
           echo "::set-output name=SetOutputRes::$(date "+%y%m%d").$GITHUB_RUN_NUMBER.hello"
@@ -29,6 +29,13 @@ jobs:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
           parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "aliossupload.newarray.vip", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
+
+      - name: BatchSetCdnDomainConfig
+        uses: weirui88888/aliyun-cdn-sdk@v1.0.1
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "BatchSetCdnDomainConfig", "domainNames": "aliossupload.newarray.vip", "functions": "[{"functionArgs":[{"argName":"ttl","argValue":"86400"}],"functionName":"filetype_based_ttl_set"}]" }'
 
       - name: View ResponseBody
         run: |
