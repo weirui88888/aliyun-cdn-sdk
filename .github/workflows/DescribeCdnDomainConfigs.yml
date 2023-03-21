@@ -1,0 +1,23 @@
+name: 'TEST DescribeCdnDomainConfigs'
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+      - name: Test DescribeCdnDomainConfigs
+        id: DescribeCdnDomainConfigs
+        uses: weirui88888/aliyun-cdn-sdk@v1.0.1
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "aliossupload.newarray.vip", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
+
+      - name: View
+        run: |
+          echo "---------------------------------------------------------------"
+          echo ${{steps.DescribeCdnDomainConfigs.outputs.responseBody}}
+          echo "---------------------------------------------------------------"
