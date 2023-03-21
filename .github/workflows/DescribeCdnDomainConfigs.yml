@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: DescribeCdnDomainConfigs
         id: DescribeCdnDomainConfigs
-        uses: weirui88888/aliyun-cdn-sdk@v1.0.1
+        uses: weirui88888/aliyun-cdn-sdk@v1.0.2
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}

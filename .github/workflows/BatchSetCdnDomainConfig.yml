@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: BatchSetCdnDomainConfig
         id: BatchSetCdnDomainConfig
-        uses: weirui88888/aliyun-cdn-sdk@v1.0.1
+        uses: weirui88888/aliyun-cdn-sdk@v1.0.2
         env:
           ttl_config: '{"action": "BatchSetCdnDomainConfig", "domainNames": "aliossupload.newarray.vip", "functions": [{"functionArgs": [{"argName": "file_type","argValue": "html,css,js,png,jpeg,jpg"}, {"argName": "weight","argValue": "1"}, {"argName": "ttl","argValue": "86400"}],"functionName": "filetype_based_ttl_set"}] }'
         with:
