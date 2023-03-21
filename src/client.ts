@@ -33,6 +33,11 @@ export default class Client {
         requestOptions[optionsKey] = Util.toJSONString(optionValue)
       }
     }
+    const lowerKeyRequestOptions: Record<string, any> = {}
+    for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
+      const lowerCaseKey = optionsKey.charAt(0).toLowerCase() + optionsKey.slice(1)
+      lowerKeyRequestOptions[lowerCaseKey] = optionValue
+    }
 
     const runtime = !!runtimeOptions
       ? new $Util.RuntimeOptions(runtimeOptions)
@@ -53,7 +58,7 @@ export default class Client {
     )
     try {
       // @ts-ignore
-      const options = new $Cdn[RequestActionName](requestOptions)
+      const options = new $Cdn[RequestActionName](lowerKeyRequestOptions)
       // @ts-ignore
       const response = await client[CdnSdkApiName](options, runtime)
       logger('view your sdk api response', response)
