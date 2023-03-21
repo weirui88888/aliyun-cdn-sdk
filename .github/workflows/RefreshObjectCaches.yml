@@ -7,9 +7,9 @@ jobs:
     steps:
       - name: RefreshObjectCaches
         id: RefreshObjectCaches
-        uses: weirui88888/aliyun-cdn-sdk@v1.0.1
+        uses: weirui88888/aliyun-cdn-sdk@v1.0.2
         env:
-          ttl_config: '{"action": "BatchSetCdnDomainConfig", "DomainNames": "aliossupload.newarray.vip", "functions": [{"functionArgs": [{"argName": "file_type","argValue": "html,css,js,png,jpeg,jpg"}, {"argName": "weight","argValue": "2"}, {"argName": "ttl","argValue": "86400"}],"functionName": "filetype_based_ttl_set"}] }'
+          ttl_config: '{"action": "RefreshObjectCaches", "ObjectPath": "https://aliossupload.newarray.vip/", "ObjectType": "Directory" }'
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
