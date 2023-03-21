@@ -1,6 +1,6 @@
 {
   "name": "aliyun-cdn-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "supports all standard aliyun cdn apis for easy use in github actions",
   "main": "lib/main.js",
