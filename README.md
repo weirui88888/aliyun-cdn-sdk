@@ -125,7 +125,7 @@ let {action, runtimeOptions, ...requestOptions} = JSON.parse(parameters)
 
 for (let [optionsKey, optionValue] of Object.entries(requestOptions)) {
   if (typeof optionValue === 'object') {
-    requestOptions[optionsKey] = Util.toJSONString(requestOptions.functions)
+    requestOptions[optionsKey] = Util.toJSONString(optionValue)
   }
 }
 ```
