@@ -6,7 +6,11 @@ Aliyun Cdn Sdk Github Action
 
 ## 简介
 
-一款基于阿里云 CDN API 的 [Github Action](https://github.com/marketplace/actions/aliyun-cdn-sdk)，几乎支持所有的官方 API 调用，具体的细节和使用方式请结合[CDN API 参考](https://help.aliyun.com/document_detail/91856.html)，你也可以从源代码仓库中查看几个使用该 action 的 demo,例如[BatchSetCdnDomainConfig.yml](https://github.com/weirui88888/aliyun-cdn-sdk/blob/main/.github/workflows/BatchSetCdnDomainConfig.yml),[DescribeCdnDomainConfigs.yml](https://github.com/weirui88888/aliyun-cdn-sdk/blob/main/.github/workflows/DescribeCdnDomainConfigs.yml)
+一款基于阿里云 CDN API 的 [Github Action](https://github.com/marketplace/actions/aliyun-cdn-sdk)，几乎支持所有的官方 API 调用，具体的细节请结合[CDN API 参考](https://help.aliyun.com/document_detail/91856.html)
+
+关于如何使用该action，你可以参考以下，例如：
+- [DescribeCdnDomainConfigs-获取域名配置](https://github.com/weirui88888/aliyun-cdn-sdk/blob/main/.github/workflows/DescribeCdnDomainConfigs.yml)
+- [BatchSetCdnDomainConfig-批量配置域名](https://github.com/weirui88888/aliyun-cdn-sdk/blob/main/.github/workflows/BatchSetCdnDomainConfig.yml)
 
 该[aliyun-cdn-sdk](https://github.com/weirui88888/aliyun-cdn-sdk)基于官方仓库[官方模板仓库](https://github.com/actions/typescript-action)进行创建
 
