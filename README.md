@@ -18,13 +18,13 @@ Aliyun Cdn Sdk Github Action
 
 ## 使用步骤
 
-##### 1.明确意图
+### 1.明确意图
 
-明确你想要用该 Action 来对你的 CDN 做些什么配置。然后去[官方 API 文档](https://help.aliyun.com/document_detail/106661.html)找到对应的方法，这里以最简单的`DescribeCdnDomainConfigs`进行演示
+明确你想要用该 Action 来对你的 CDN 做些什么配置。然后去[官方 API 文档](https://help.aliyun.com/document_detail/106661.html)找到对应的方法，这里以最简单的[DescribeCdnDomainConfigs](https://help.aliyun.com/document_detail/448018.htm)进行演示
 
 ![DescribeCdnDomainConfigs](https://show.newarray.vip/aliyun-cdn-api-action/DescribeCdnDomainConfigs.png)
 
-##### 2.使用 Action
+### 2.使用 Action
 
 在你的 yml 文件中，使用该 Action 并传入正确的配置项即可
 
@@ -38,7 +38,7 @@ Aliyun Cdn Sdk Github Action
     parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "your domain name", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
 ```
 
-##### 3.获取 API 返回结果
+### 3.获取 API 返回结果
 
 该 Action 只有一个输出项`responseBody`，应该也够用了。主要根据该配置项能够获取两个有效信息
 
