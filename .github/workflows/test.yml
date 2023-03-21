@@ -32,10 +32,12 @@ jobs:
 
       - name: BatchSetCdnDomainConfig
         uses: weirui88888/aliyun-cdn-sdk@v1.0.1
+        env:
+          ttl_config: '{"action": "BatchSetCdnDomainConfig", "domainNames": "aliossupload.newarray.vip", "functions": [{"functionArgs": [{"argName": "file_type","argValue": "html,css,js,png,jpeg,jpg"}, {"argName": "weight","argValue": "1"}, {"argName": "ttl","argValue": "86400"}],"functionName": "filetype_based_ttl_set"}] }'
         with:
           accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
           accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
-          parameters: '{"action": "BatchSetCdnDomainConfig", "domainNames": "aliossupload.newarray.vip", "functions": "[{"functionArgs":[{"argName":"ttl","argValue":"86400"}],"functionName":"filetype_based_ttl_set"}]" }'
+          parameters: ${{env.ttl_config}}
 
       - name: View ResponseBody
         run: |
