@@ -1,4 +1,4 @@
-name: 'TEST BatchSetCdnDomainConfig'
+name: 'Demo<BatchSetCdnDomainConfig>'
 on: [push]
 
 jobs:
