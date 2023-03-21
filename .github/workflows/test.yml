@@ -1,0 +1,39 @@
+name: 'TEST ACTION'
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CheckOut
+        uses: actions/checkout@v3
+
+      - name: View Package.json
+        run: |
+          cat package.json
+
+      - name: Build a compressed version with set-output
+        id: versionGeneratorSetOutput
+        run: |
+          echo "::set-output name=SetOutputRes::$(date "+%y%m%d").$GITHUB_RUN_NUMBER.hello"
+
+      - name: Build a compressed version with environment
+        id: versionGeneratorEnvironment
+        run: |
+          echo "EnvironmentRes=$(date "+%y%m%d").$GITHUB_RUN_NUMBER.world" >> $GITHUB_OUTPUT
+
+      - name: Test DescribeCdnDomainConfigs
+        id: getDescribeCdnDomainConfigsConfig
+        uses: weirui88888/aliyun-cdn-sdk@v1.0.1
+        with:
+          accessKeyId: ${{secrets.ALI_ACCESS_KEY_ID}}
+          accessKeySecret: ${{secrets.ALI_ACCESS_KEY_SECRET}}
+          parameters: '{"action": "DescribeCdnDomainConfigs", "domainName": "aliossupload.newarray.vip", "functionNames": "filetype_based_ttl_set,set_req_host_header" }'
+
+      - name: View ResponseBody
+        run: |
+          echo ${{steps.getDescribeCdnDomainConfigsConfig.outputs.responseBody}}
+          echo "---------------------------------------------------------------"
+          echo ${{steps.versionGeneratorSetOutput.outputs.SetOutputRes}}
+          echo "---------------------------------------------------------------"
+          echo ${{steps.versionGeneratorEnvironment.outputs.EnvironmentRes}}
