@@ -22,7 +22,7 @@ Aliyun Cdn Sdk Github Action
 
 明确你想要用该 Action 来对你的 CDN 做些什么配置。然后去[官方 API 文档](https://help.aliyun.com/document_detail/106661.html)找到对应的方法，这里以最简单的[DescribeCdnDomainConfigs](https://help.aliyun.com/document_detail/448018.htm)进行演示
 
-![DescribeCdnDomainConfigs](https://show.newarray.vip/aliyun-cdn-api-action/DescribeCdnDomainConfigs.png)
+![DescribeCdnDomainConfigs](https://show.newarray.vip/aliyun-cdn-api-action/DescribeCdnDomain.png)
 
 ### 2.使用 Action
 
